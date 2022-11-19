@@ -1,0 +1,12 @@
+﻿@Model ProjetoAgroCoops.Models.pessoaFisica
+@{
+    ViewBag.Title = "Cadastro Produtor";
+}
+<h1> Cadastro de produtor </h1>
+<form name="formCadastro" action="/Produtor/cadastrar?idPessoa=@Model.idPessoa" method="post">
+    <div class="form-group">
+        <label for="exampleInputEmail1"> Numero do produtor: </label>
+        <input type="text" name="carteiraProdutor" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Insira o numero da sua carteira...">
+    </div>
+    <button type="submit" class="btn btn-primary"> Concluir </button>
+</form>

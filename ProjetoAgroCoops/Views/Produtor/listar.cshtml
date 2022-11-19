@@ -1,0 +1,31 @@
+﻿@Model ProjetoAgroCoops.Models.cooperativa;
+@{
+    ViewBag.Title = "Listar Cooperativas";
+}
+<h1> Informações do produtor </h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">ID:</th>
+            <th scope="col">cpf:</th>
+            <th scope="col">Sexo:</th>
+            <th scope="col">Carteira do produtor:</th>
+
+        </tr>
+    </thead>
+    <tbody>
+
+
+        <tr>
+            <th scope="row">@Model.idPessoaFisica</th>
+            <td>@Model.pessoaFisica.cpf</td>
+            <td>@Model.pessoaFisica.sexo</td>
+            <td>@Model.carteiraProdutor</td>
+
+            <td>
+                <a href="/Produtor/excluir?id=@Model.idPessoaFisica" class="btn btn-danger"> excluir </a>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,17 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+<form name="formCadastro" action="/Pessoa/verificarLogin" method="post">
+    <div class="form-group">
+        <label for="exampleInputEmail1"> email: </label>
+        <input type="text" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Insira seu email">
+    </div>
+    <div class="form-group">
+        <label for="exampleInputPassword1"> Senha: </label>
+        <input type="password" name="senha" class="form-control" id="exampleInputPassword1" placeholder="Insira sua senha">
+    </div>
+    <div class="form-group">
+        <label for="exampleInputPassword1"> @ViewBag.errologin </label>
+    </div>
+    <button type="submit" class="btn btn-primary"> Logar </button>
+</form>

@@ -1,0 +1,16 @@
+﻿@Model ProjetoAgroCoops.Models.Produtos;
+@{
+    ViewBag.Title = "Cadastro Produtos";
+}
+<h1> Cadastrar produtos </h1>
+<form name="formCadastro" action="/Produto/adicionarEstoque?id=@Model.idProduto" method="post">
+    <div class="form-group">
+        <label for="exampleInputEmail1"> Descrição produto </label>
+        <input type="text" name="descricaoProduto" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="@Model.descricaoProduto">
+    </div>
+    <div class="form-group">
+        <label for="exampleInputEmail1"> Quantidade estoque: </label>
+        <input type="text" name="quantidadeEstoque" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="@Model.quantidadeEstoque">
+    </div>
+    <button type="submit" class="btn btn-primary"> Atualizar estoque </button>
+</form>

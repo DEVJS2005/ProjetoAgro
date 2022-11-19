@@ -1,0 +1,797 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="BDAgriculturaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="cooperativa">
+          <Key>
+            <PropertyRef Name="idCooperativa" />
+          </Key>
+          <Property Name="idCooperativa" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nomeCooperativa" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="telefone" Type="bigint" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="cnpjCooperativo" Type="bigint" Nullable="false" />
+          <Property Name="cidade" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="estado" Type="char" MaxLength="2" Nullable="false" />
+          <Property Name="regiao" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="entrada">
+          <Key>
+            <PropertyRef Name="idEntrada" />
+          </Key>
+          <Property Name="idEntrada" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idProdutor" Type="int" Nullable="false" />
+          <Property Name="idCooperativa" Type="int" Nullable="false" />
+          <Property Name="idProduto" Type="int" Nullable="false" />
+          <Property Name="quantidadeEntrada" Type="int" Nullable="false" />
+          <Property Name="dataEntrada" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="estoque">
+          <Key>
+            <PropertyRef Name="idProduto" />
+          </Key>
+          <Property Name="idProduto" Type="int" Nullable="false" />
+          <Property Name="quantidadeEstoque" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="pedido">
+          <Key>
+            <PropertyRef Name="idPedido" />
+          </Key>
+          <Property Name="idPedido" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idPessoa" Type="int" Nullable="false" />
+          <Property Name="dataPedido" Type="date" Nullable="false" />
+          <Property Name="status" Type="char" MaxLength="1" Nullable="false" />
+        </EntityType>
+        <EntityType Name="pedidoEstoque">
+          <Key>
+            <PropertyRef Name="idPedido" />
+            <PropertyRef Name="idProduto" />
+            <PropertyRef Name="idCooperativa" />
+          </Key>
+          <Property Name="idPedido" Type="int" Nullable="false" />
+          <Property Name="idProduto" Type="int" Nullable="false" />
+          <Property Name="idCooperativa" Type="int" Nullable="false" />
+          <Property Name="quantidade" Type="int" Nullable="false" />
+          <Property Name="observacaoProduto" Type="text" />
+        </EntityType>
+        <EntityType Name="pessoa">
+          <Key>
+            <PropertyRef Name="idPessoa" />
+          </Key>
+          <Property Name="idPessoa" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nome" Type="varchar" MaxLength="65" Nullable="false" />
+          <Property Name="telefone" Type="bigint" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="senha" Type="varchar" MaxLength="6" Nullable="false" />
+          <Property Name="tipoPessoa" Type="char" MaxLength="1" Nullable="false" />
+        </EntityType>
+        <EntityType Name="pessoaFisica">
+          <Key>
+            <PropertyRef Name="idPessoa" />
+          </Key>
+          <Property Name="idPessoa" Type="int" Nullable="false" />
+          <Property Name="cpf" Type="bigint" Nullable="false" />
+          <Property Name="sexo" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="dataNascimento" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="pessoaJuridica">
+          <Key>
+            <PropertyRef Name="idPessoa" />
+          </Key>
+          <Property Name="idPessoa" Type="int" Nullable="false" />
+          <Property Name="cnpj" Type="bigint" Nullable="false" />
+          <Property Name="nomeFantasia" Type="varchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="produto">
+          <Key>
+            <PropertyRef Name="idProduto" />
+          </Key>
+          <Property Name="idProduto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="descricaoProduto" Type="varchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="produtor">
+          <Key>
+            <PropertyRef Name="idPessoaFisica" />
+          </Key>
+          <Property Name="idPessoaFisica" Type="int" Nullable="false" />
+          <Property Name="carteiraProdutor" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="valorUnitario">
+          <Key>
+            <PropertyRef Name="idValorUnitario" />
+          </Key>
+          <Property Name="idValorUnitario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idProduto" Type="int" Nullable="false" />
+          <Property Name="idCooperativa" Type="int" Nullable="false" />
+          <Property Name="dataValorUnitario" Type="date" Nullable="false" />
+          <Property Name="valorUnitario" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_entrada_cooperativas">
+          <End Role="cooperativa" Type="Self.cooperativa" Multiplicity="1" />
+          <End Role="entrada" Type="Self.entrada" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cooperativa">
+              <PropertyRef Name="idCooperativa" />
+            </Principal>
+            <Dependent Role="entrada">
+              <PropertyRef Name="idCooperativa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_entrada_produtor">
+          <End Role="produtor" Type="Self.produtor" Multiplicity="1" />
+          <End Role="entrada" Type="Self.entrada" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="produtor">
+              <PropertyRef Name="idPessoaFisica" />
+            </Principal>
+            <Dependent Role="entrada">
+              <PropertyRef Name="idProdutor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_estoque_produtos">
+          <End Role="produto" Type="Self.produto" Multiplicity="1" />
+          <End Role="estoque" Type="Self.estoque" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="produto">
+              <PropertyRef Name="idProduto" />
+            </Principal>
+            <Dependent Role="estoque">
+              <PropertyRef Name="idProduto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_pedido_pessoas">
+          <End Role="pessoa" Type="Self.pessoa" Multiplicity="1" />
+          <End Role="pedido" Type="Self.pedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="pessoa">
+              <PropertyRef Name="idPessoa" />
+            </Principal>
+            <Dependent Role="pedido">
+              <PropertyRef Name="idPessoa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_pedidoEstoque_cooperativas">
+          <End Role="cooperativa" Type="Self.cooperativa" Multiplicity="1" />
+          <End Role="pedidoEstoque" Type="Self.pedidoEstoque" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cooperativa">
+              <PropertyRef Name="idCooperativa" />
+            </Principal>
+            <Dependent Role="pedidoEstoque">
+              <PropertyRef Name="idCooperativa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_pedidoEstoque_pedido">
+          <End Role="pedido" Type="Self.pedido" Multiplicity="1" />
+          <End Role="pedidoEstoque" Type="Self.pedidoEstoque" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="pedido">
+              <PropertyRef Name="idPedido" />
+            </Principal>
+            <Dependent Role="pedidoEstoque">
+              <PropertyRef Name="idPedido" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_pedidoEstoque_produtos">
+          <End Role="produto" Type="Self.produto" Multiplicity="1" />
+          <End Role="pedidoEstoque" Type="Self.pedidoEstoque" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="produto">
+              <PropertyRef Name="idProduto" />
+            </Principal>
+            <Dependent Role="pedidoEstoque">
+              <PropertyRef Name="idProduto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_pessoaFisica_pessoas">
+          <End Role="pessoa" Type="Self.pessoa" Multiplicity="1" />
+          <End Role="pessoaFisica" Type="Self.pessoaFisica" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="pessoa">
+              <PropertyRef Name="idPessoa" />
+            </Principal>
+            <Dependent Role="pessoaFisica">
+              <PropertyRef Name="idPessoa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_pessoaJuridica_pessoas">
+          <End Role="pessoa" Type="Self.pessoa" Multiplicity="1" />
+          <End Role="pessoaJuridica" Type="Self.pessoaJuridica" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="pessoa">
+              <PropertyRef Name="idPessoa" />
+            </Principal>
+            <Dependent Role="pessoaJuridica">
+              <PropertyRef Name="idPessoa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_produtor_pessoaFisica">
+          <End Role="pessoaFisica" Type="Self.pessoaFisica" Multiplicity="1" />
+          <End Role="produtor" Type="Self.produtor" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="pessoaFisica">
+              <PropertyRef Name="idPessoa" />
+            </Principal>
+            <Dependent Role="produtor">
+              <PropertyRef Name="idPessoaFisica" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_valorUnitario_cooperativas">
+          <End Role="cooperativa" Type="Self.cooperativa" Multiplicity="1" />
+          <End Role="valorUnitario" Type="Self.valorUnitario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cooperativa">
+              <PropertyRef Name="idCooperativa" />
+            </Principal>
+            <Dependent Role="valorUnitario">
+              <PropertyRef Name="idCooperativa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_valorUnitario_produtos">
+          <End Role="produto" Type="Self.produto" Multiplicity="1" />
+          <End Role="valorUnitario" Type="Self.valorUnitario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="produto">
+              <PropertyRef Name="idProduto" />
+            </Principal>
+            <Dependent Role="valorUnitario">
+              <PropertyRef Name="idProduto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BDAgriculturaModelStoreContainer">
+          <EntitySet Name="cooperativa" EntityType="Self.cooperativa" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="entrada" EntityType="Self.entrada" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="estoque" EntityType="Self.estoque" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="pedido" EntityType="Self.pedido" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="pedidoEstoque" EntityType="Self.pedidoEstoque" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="pessoa" EntityType="Self.pessoa" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="pessoaFisica" EntityType="Self.pessoaFisica" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="pessoaJuridica" EntityType="Self.pessoaJuridica" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="produto" EntityType="Self.produto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="produtor" EntityType="Self.produtor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="valorUnitario" EntityType="Self.valorUnitario" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_entrada_cooperativas" Association="Self.FK_entrada_cooperativas">
+            <End Role="cooperativa" EntitySet="cooperativa" />
+            <End Role="entrada" EntitySet="entrada" />
+          </AssociationSet>
+          <AssociationSet Name="FK_entrada_produtor" Association="Self.FK_entrada_produtor">
+            <End Role="produtor" EntitySet="produtor" />
+            <End Role="entrada" EntitySet="entrada" />
+          </AssociationSet>
+          <AssociationSet Name="FK_estoque_produtos" Association="Self.FK_estoque_produtos">
+            <End Role="produto" EntitySet="produto" />
+            <End Role="estoque" EntitySet="estoque" />
+          </AssociationSet>
+          <AssociationSet Name="FK_pedido_pessoas" Association="Self.FK_pedido_pessoas">
+            <End Role="pessoa" EntitySet="pessoa" />
+            <End Role="pedido" EntitySet="pedido" />
+          </AssociationSet>
+          <AssociationSet Name="FK_pedidoEstoque_cooperativas" Association="Self.FK_pedidoEstoque_cooperativas">
+            <End Role="cooperativa" EntitySet="cooperativa" />
+            <End Role="pedidoEstoque" EntitySet="pedidoEstoque" />
+          </AssociationSet>
+          <AssociationSet Name="FK_pedidoEstoque_pedido" Association="Self.FK_pedidoEstoque_pedido">
+            <End Role="pedido" EntitySet="pedido" />
+            <End Role="pedidoEstoque" EntitySet="pedidoEstoque" />
+          </AssociationSet>
+          <AssociationSet Name="FK_pedidoEstoque_produtos" Association="Self.FK_pedidoEstoque_produtos">
+            <End Role="produto" EntitySet="produto" />
+            <End Role="pedidoEstoque" EntitySet="pedidoEstoque" />
+          </AssociationSet>
+          <AssociationSet Name="FK_pessoaFisica_pessoas" Association="Self.FK_pessoaFisica_pessoas">
+            <End Role="pessoa" EntitySet="pessoa" />
+            <End Role="pessoaFisica" EntitySet="pessoaFisica" />
+          </AssociationSet>
+          <AssociationSet Name="FK_pessoaJuridica_pessoas" Association="Self.FK_pessoaJuridica_pessoas">
+            <End Role="pessoa" EntitySet="pessoa" />
+            <End Role="pessoaJuridica" EntitySet="pessoaJuridica" />
+          </AssociationSet>
+          <AssociationSet Name="FK_produtor_pessoaFisica" Association="Self.FK_produtor_pessoaFisica">
+            <End Role="pessoaFisica" EntitySet="pessoaFisica" />
+            <End Role="produtor" EntitySet="produtor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_valorUnitario_cooperativas" Association="Self.FK_valorUnitario_cooperativas">
+            <End Role="cooperativa" EntitySet="cooperativa" />
+            <End Role="valorUnitario" EntitySet="valorUnitario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_valorUnitario_produtos" Association="Self.FK_valorUnitario_produtos">
+            <End Role="produto" EntitySet="produto" />
+            <End Role="valorUnitario" EntitySet="valorUnitario" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="BDAgriculturaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="cooperativa">
+          <Key>
+            <PropertyRef Name="idCooperativa" />
+          </Key>
+          <Property Name="idCooperativa" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nomeCooperativa" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="telefone" Type="Int64" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="cnpjCooperativo" Type="Int64" Nullable="false" />
+          <Property Name="cidade" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="estado" Type="String" MaxLength="2" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="regiao" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="entrada" Relationship="Self.FK_entrada_cooperativas" FromRole="cooperativa" ToRole="entrada" />
+          <NavigationProperty Name="pedidoEstoque" Relationship="Self.FK_pedidoEstoque_cooperativas" FromRole="cooperativa" ToRole="pedidoEstoque" />
+          <NavigationProperty Name="valorUnitario" Relationship="Self.FK_valorUnitario_cooperativas" FromRole="cooperativa" ToRole="valorUnitario" />
+        </EntityType>
+        <EntityType Name="entrada">
+          <Key>
+            <PropertyRef Name="idEntrada" />
+          </Key>
+          <Property Name="idEntrada" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idProdutor" Type="Int32" Nullable="false" />
+          <Property Name="idCooperativa" Type="Int32" Nullable="false" />
+          <Property Name="idProduto" Type="Int32" Nullable="false" />
+          <Property Name="quantidadeEntrada" Type="Int32" Nullable="false" />
+          <Property Name="dataEntrada" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="cooperativa" Relationship="Self.FK_entrada_cooperativas" FromRole="entrada" ToRole="cooperativa" />
+          <NavigationProperty Name="produtor" Relationship="Self.FK_entrada_produtor" FromRole="entrada" ToRole="produtor" />
+        </EntityType>
+        <EntityType Name="estoque">
+          <Key>
+            <PropertyRef Name="idProduto" />
+          </Key>
+          <Property Name="idProduto" Type="Int32" Nullable="false" />
+          <Property Name="quantidadeEstoque" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="produto" Relationship="Self.FK_estoque_produtos" FromRole="estoque" ToRole="produto" />
+        </EntityType>
+        <EntityType Name="pedido">
+          <Key>
+            <PropertyRef Name="idPedido" />
+          </Key>
+          <Property Name="idPedido" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idPessoa" Type="Int32" Nullable="false" />
+          <Property Name="dataPedido" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="status" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="pessoa" Relationship="Self.FK_pedido_pessoas" FromRole="pedido" ToRole="pessoa" />
+          <NavigationProperty Name="pedidoEstoque" Relationship="Self.FK_pedidoEstoque_pedido" FromRole="pedido" ToRole="pedidoEstoque" />
+        </EntityType>
+        <EntityType Name="pedidoEstoque">
+          <Key>
+            <PropertyRef Name="idPedido" />
+            <PropertyRef Name="idProduto" />
+            <PropertyRef Name="idCooperativa" />
+          </Key>
+          <Property Name="idPedido" Type="Int32" Nullable="false" />
+          <Property Name="idProduto" Type="Int32" Nullable="false" />
+          <Property Name="idCooperativa" Type="Int32" Nullable="false" />
+          <Property Name="quantidade" Type="Int32" Nullable="false" />
+          <Property Name="observacaoProduto" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="cooperativa" Relationship="Self.FK_pedidoEstoque_cooperativas" FromRole="pedidoEstoque" ToRole="cooperativa" />
+          <NavigationProperty Name="pedido" Relationship="Self.FK_pedidoEstoque_pedido" FromRole="pedidoEstoque" ToRole="pedido" />
+          <NavigationProperty Name="produto" Relationship="Self.FK_pedidoEstoque_produtos" FromRole="pedidoEstoque" ToRole="produto" />
+        </EntityType>
+        <EntityType Name="pessoa">
+          <Key>
+            <PropertyRef Name="idPessoa" />
+          </Key>
+          <Property Name="idPessoa" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nome" Type="String" MaxLength="65" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="telefone" Type="Int64" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="senha" Type="String" MaxLength="6" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="tipoPessoa" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="pedido" Relationship="Self.FK_pedido_pessoas" FromRole="pessoa" ToRole="pedido" />
+          <NavigationProperty Name="pessoaFisica" Relationship="Self.FK_pessoaFisica_pessoas" FromRole="pessoa" ToRole="pessoaFisica" />
+          <NavigationProperty Name="pessoaJuridica" Relationship="Self.FK_pessoaJuridica_pessoas" FromRole="pessoa" ToRole="pessoaJuridica" />
+        </EntityType>
+        <EntityType Name="pessoaFisica">
+          <Key>
+            <PropertyRef Name="idPessoa" />
+          </Key>
+          <Property Name="idPessoa" Type="Int32" Nullable="false" />
+          <Property Name="cpf" Type="Int64" Nullable="false" />
+          <Property Name="sexo" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="dataNascimento" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="pessoa" Relationship="Self.FK_pessoaFisica_pessoas" FromRole="pessoaFisica" ToRole="pessoa" />
+          <NavigationProperty Name="produtor" Relationship="Self.FK_produtor_pessoaFisica" FromRole="pessoaFisica" ToRole="produtor" />
+        </EntityType>
+        <EntityType Name="pessoaJuridica">
+          <Key>
+            <PropertyRef Name="idPessoa" />
+          </Key>
+          <Property Name="idPessoa" Type="Int32" Nullable="false" />
+          <Property Name="cnpj" Type="Int64" Nullable="false" />
+          <Property Name="nomeFantasia" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="pessoa" Relationship="Self.FK_pessoaJuridica_pessoas" FromRole="pessoaJuridica" ToRole="pessoa" />
+        </EntityType>
+        <EntityType Name="produto">
+          <Key>
+            <PropertyRef Name="idProduto" />
+          </Key>
+          <Property Name="idProduto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="descricaoProduto" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="estoque" Relationship="Self.FK_estoque_produtos" FromRole="produto" ToRole="estoque" />
+          <NavigationProperty Name="pedidoEstoque" Relationship="Self.FK_pedidoEstoque_produtos" FromRole="produto" ToRole="pedidoEstoque" />
+          <NavigationProperty Name="valorUnitario" Relationship="Self.FK_valorUnitario_produtos" FromRole="produto" ToRole="valorUnitario" />
+        </EntityType>
+        <EntityType Name="produtor">
+          <Key>
+            <PropertyRef Name="idPessoaFisica" />
+          </Key>
+          <Property Name="idPessoaFisica" Type="Int32" Nullable="false" />
+          <Property Name="carteiraProdutor" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="entrada" Relationship="Self.FK_entrada_produtor" FromRole="produtor" ToRole="entrada" />
+          <NavigationProperty Name="pessoaFisica" Relationship="Self.FK_produtor_pessoaFisica" FromRole="produtor" ToRole="pessoaFisica" />
+        </EntityType>
+        <EntityType Name="valorUnitario">
+          <Key>
+            <PropertyRef Name="idValorUnitario" />
+          </Key>
+          <Property Name="idValorUnitario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idProduto" Type="Int32" Nullable="false" />
+          <Property Name="idCooperativa" Type="Int32" Nullable="false" />
+          <Property Name="dataValorUnitario" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="valorUnitario1" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <NavigationProperty Name="cooperativa" Relationship="Self.FK_valorUnitario_cooperativas" FromRole="valorUnitario" ToRole="cooperativa" />
+          <NavigationProperty Name="produto" Relationship="Self.FK_valorUnitario_produtos" FromRole="valorUnitario" ToRole="produto" />
+        </EntityType>
+        <Association Name="FK_entrada_cooperativas">
+          <End Role="cooperativa" Type="Self.cooperativa" Multiplicity="1" />
+          <End Role="entrada" Type="Self.entrada" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cooperativa">
+              <PropertyRef Name="idCooperativa" />
+            </Principal>
+            <Dependent Role="entrada">
+              <PropertyRef Name="idCooperativa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_pedidoEstoque_cooperativas">
+          <End Role="cooperativa" Type="Self.cooperativa" Multiplicity="1" />
+          <End Role="pedidoEstoque" Type="Self.pedidoEstoque" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cooperativa">
+              <PropertyRef Name="idCooperativa" />
+            </Principal>
+            <Dependent Role="pedidoEstoque">
+              <PropertyRef Name="idCooperativa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_valorUnitario_cooperativas">
+          <End Role="cooperativa" Type="Self.cooperativa" Multiplicity="1" />
+          <End Role="valorUnitario" Type="Self.valorUnitario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cooperativa">
+              <PropertyRef Name="idCooperativa" />
+            </Principal>
+            <Dependent Role="valorUnitario">
+              <PropertyRef Name="idCooperativa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_entrada_produtor">
+          <End Role="produtor" Type="Self.produtor" Multiplicity="1" />
+          <End Role="entrada" Type="Self.entrada" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="produtor">
+              <PropertyRef Name="idPessoaFisica" />
+            </Principal>
+            <Dependent Role="entrada">
+              <PropertyRef Name="idProdutor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_estoque_produtos">
+          <End Role="produto" Type="Self.produto" Multiplicity="1" />
+          <End Role="estoque" Type="Self.estoque" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="produto">
+              <PropertyRef Name="idProduto" />
+            </Principal>
+            <Dependent Role="estoque">
+              <PropertyRef Name="idProduto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_pedido_pessoas">
+          <End Role="pessoa" Type="Self.pessoa" Multiplicity="1" />
+          <End Role="pedido" Type="Self.pedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="pessoa">
+              <PropertyRef Name="idPessoa" />
+            </Principal>
+            <Dependent Role="pedido">
+              <PropertyRef Name="idPessoa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_pedidoEstoque_pedido">
+          <End Role="pedido" Type="Self.pedido" Multiplicity="1" />
+          <End Role="pedidoEstoque" Type="Self.pedidoEstoque" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="pedido">
+              <PropertyRef Name="idPedido" />
+            </Principal>
+            <Dependent Role="pedidoEstoque">
+              <PropertyRef Name="idPedido" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_pedidoEstoque_produtos">
+          <End Role="produto" Type="Self.produto" Multiplicity="1" />
+          <End Role="pedidoEstoque" Type="Self.pedidoEstoque" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="produto">
+              <PropertyRef Name="idProduto" />
+            </Principal>
+            <Dependent Role="pedidoEstoque">
+              <PropertyRef Name="idProduto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_pessoaFisica_pessoas">
+          <End Role="pessoa" Type="Self.pessoa" Multiplicity="1" />
+          <End Role="pessoaFisica" Type="Self.pessoaFisica" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="pessoa">
+              <PropertyRef Name="idPessoa" />
+            </Principal>
+            <Dependent Role="pessoaFisica">
+              <PropertyRef Name="idPessoa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_pessoaJuridica_pessoas">
+          <End Role="pessoa" Type="Self.pessoa" Multiplicity="1" />
+          <End Role="pessoaJuridica" Type="Self.pessoaJuridica" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="pessoa">
+              <PropertyRef Name="idPessoa" />
+            </Principal>
+            <Dependent Role="pessoaJuridica">
+              <PropertyRef Name="idPessoa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_produtor_pessoaFisica">
+          <End Role="pessoaFisica" Type="Self.pessoaFisica" Multiplicity="1" />
+          <End Role="produtor" Type="Self.produtor" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="pessoaFisica">
+              <PropertyRef Name="idPessoa" />
+            </Principal>
+            <Dependent Role="produtor">
+              <PropertyRef Name="idPessoaFisica" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_valorUnitario_produtos">
+          <End Role="produto" Type="Self.produto" Multiplicity="1" />
+          <End Role="valorUnitario" Type="Self.valorUnitario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="produto">
+              <PropertyRef Name="idProduto" />
+            </Principal>
+            <Dependent Role="valorUnitario">
+              <PropertyRef Name="idProduto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BDAgriculturaEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="cooperativa" EntityType="Self.cooperativa" />
+          <EntitySet Name="entrada" EntityType="Self.entrada" />
+          <EntitySet Name="estoque" EntityType="Self.estoque" />
+          <EntitySet Name="pedido" EntityType="Self.pedido" />
+          <EntitySet Name="pedidoEstoque" EntityType="Self.pedidoEstoque" />
+          <EntitySet Name="pessoa" EntityType="Self.pessoa" />
+          <EntitySet Name="pessoaFisica" EntityType="Self.pessoaFisica" />
+          <EntitySet Name="pessoaJuridica" EntityType="Self.pessoaJuridica" />
+          <EntitySet Name="produto" EntityType="Self.produto" />
+          <EntitySet Name="produtor" EntityType="Self.produtor" />
+          <EntitySet Name="valorUnitario" EntityType="Self.valorUnitario" />
+          <AssociationSet Name="FK_entrada_cooperativas" Association="Self.FK_entrada_cooperativas">
+            <End Role="cooperativa" EntitySet="cooperativa" />
+            <End Role="entrada" EntitySet="entrada" />
+          </AssociationSet>
+          <AssociationSet Name="FK_pedidoEstoque_cooperativas" Association="Self.FK_pedidoEstoque_cooperativas">
+            <End Role="cooperativa" EntitySet="cooperativa" />
+            <End Role="pedidoEstoque" EntitySet="pedidoEstoque" />
+          </AssociationSet>
+          <AssociationSet Name="FK_valorUnitario_cooperativas" Association="Self.FK_valorUnitario_cooperativas">
+            <End Role="cooperativa" EntitySet="cooperativa" />
+            <End Role="valorUnitario" EntitySet="valorUnitario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_entrada_produtor" Association="Self.FK_entrada_produtor">
+            <End Role="produtor" EntitySet="produtor" />
+            <End Role="entrada" EntitySet="entrada" />
+          </AssociationSet>
+          <AssociationSet Name="FK_estoque_produtos" Association="Self.FK_estoque_produtos">
+            <End Role="produto" EntitySet="produto" />
+            <End Role="estoque" EntitySet="estoque" />
+          </AssociationSet>
+          <AssociationSet Name="FK_pedido_pessoas" Association="Self.FK_pedido_pessoas">
+            <End Role="pessoa" EntitySet="pessoa" />
+            <End Role="pedido" EntitySet="pedido" />
+          </AssociationSet>
+          <AssociationSet Name="FK_pedidoEstoque_pedido" Association="Self.FK_pedidoEstoque_pedido">
+            <End Role="pedido" EntitySet="pedido" />
+            <End Role="pedidoEstoque" EntitySet="pedidoEstoque" />
+          </AssociationSet>
+          <AssociationSet Name="FK_pedidoEstoque_produtos" Association="Self.FK_pedidoEstoque_produtos">
+            <End Role="produto" EntitySet="produto" />
+            <End Role="pedidoEstoque" EntitySet="pedidoEstoque" />
+          </AssociationSet>
+          <AssociationSet Name="FK_pessoaFisica_pessoas" Association="Self.FK_pessoaFisica_pessoas">
+            <End Role="pessoa" EntitySet="pessoa" />
+            <End Role="pessoaFisica" EntitySet="pessoaFisica" />
+          </AssociationSet>
+          <AssociationSet Name="FK_pessoaJuridica_pessoas" Association="Self.FK_pessoaJuridica_pessoas">
+            <End Role="pessoa" EntitySet="pessoa" />
+            <End Role="pessoaJuridica" EntitySet="pessoaJuridica" />
+          </AssociationSet>
+          <AssociationSet Name="FK_produtor_pessoaFisica" Association="Self.FK_produtor_pessoaFisica">
+            <End Role="pessoaFisica" EntitySet="pessoaFisica" />
+            <End Role="produtor" EntitySet="produtor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_valorUnitario_produtos" Association="Self.FK_valorUnitario_produtos">
+            <End Role="produto" EntitySet="produto" />
+            <End Role="valorUnitario" EntitySet="valorUnitario" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="BDAgriculturaModelStoreContainer" CdmEntityContainer="BDAgriculturaEntities">
+          <EntitySetMapping Name="cooperativa">
+            <EntityTypeMapping TypeName="BDAgriculturaModel.cooperativa">
+              <MappingFragment StoreEntitySet="cooperativa">
+                <ScalarProperty Name="idCooperativa" ColumnName="idCooperativa" />
+                <ScalarProperty Name="nomeCooperativa" ColumnName="nomeCooperativa" />
+                <ScalarProperty Name="telefone" ColumnName="telefone" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="cnpjCooperativo" ColumnName="cnpjCooperativo" />
+                <ScalarProperty Name="cidade" ColumnName="cidade" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="regiao" ColumnName="regiao" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="entrada">
+            <EntityTypeMapping TypeName="BDAgriculturaModel.entrada">
+              <MappingFragment StoreEntitySet="entrada">
+                <ScalarProperty Name="idEntrada" ColumnName="idEntrada" />
+                <ScalarProperty Name="idProdutor" ColumnName="idProdutor" />
+                <ScalarProperty Name="idCooperativa" ColumnName="idCooperativa" />
+                <ScalarProperty Name="idProduto" ColumnName="idProduto" />
+                <ScalarProperty Name="quantidadeEntrada" ColumnName="quantidadeEntrada" />
+                <ScalarProperty Name="dataEntrada" ColumnName="dataEntrada" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="estoque">
+            <EntityTypeMapping TypeName="BDAgriculturaModel.estoque">
+              <MappingFragment StoreEntitySet="estoque">
+                <ScalarProperty Name="idProduto" ColumnName="idProduto" />
+                <ScalarProperty Name="quantidadeEstoque" ColumnName="quantidadeEstoque" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="pedido">
+            <EntityTypeMapping TypeName="BDAgriculturaModel.pedido">
+              <MappingFragment StoreEntitySet="pedido">
+                <ScalarProperty Name="idPedido" ColumnName="idPedido" />
+                <ScalarProperty Name="idPessoa" ColumnName="idPessoa" />
+                <ScalarProperty Name="dataPedido" ColumnName="dataPedido" />
+                <ScalarProperty Name="status" ColumnName="status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="pedidoEstoque">
+            <EntityTypeMapping TypeName="BDAgriculturaModel.pedidoEstoque">
+              <MappingFragment StoreEntitySet="pedidoEstoque">
+                <ScalarProperty Name="idPedido" ColumnName="idPedido" />
+                <ScalarProperty Name="idProduto" ColumnName="idProduto" />
+                <ScalarProperty Name="idCooperativa" ColumnName="idCooperativa" />
+                <ScalarProperty Name="quantidade" ColumnName="quantidade" />
+                <ScalarProperty Name="observacaoProduto" ColumnName="observacaoProduto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="pessoa">
+            <EntityTypeMapping TypeName="BDAgriculturaModel.pessoa">
+              <MappingFragment StoreEntitySet="pessoa">
+                <ScalarProperty Name="idPessoa" ColumnName="idPessoa" />
+                <ScalarProperty Name="nome" ColumnName="nome" />
+                <ScalarProperty Name="telefone" ColumnName="telefone" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="senha" ColumnName="senha" />
+                <ScalarProperty Name="tipoPessoa" ColumnName="tipoPessoa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="pessoaFisica">
+            <EntityTypeMapping TypeName="BDAgriculturaModel.pessoaFisica">
+              <MappingFragment StoreEntitySet="pessoaFisica">
+                <ScalarProperty Name="idPessoa" ColumnName="idPessoa" />
+                <ScalarProperty Name="cpf" ColumnName="cpf" />
+                <ScalarProperty Name="sexo" ColumnName="sexo" />
+                <ScalarProperty Name="dataNascimento" ColumnName="dataNascimento" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="pessoaJuridica">
+            <EntityTypeMapping TypeName="BDAgriculturaModel.pessoaJuridica">
+              <MappingFragment StoreEntitySet="pessoaJuridica">
+                <ScalarProperty Name="idPessoa" ColumnName="idPessoa" />
+                <ScalarProperty Name="cnpj" ColumnName="cnpj" />
+                <ScalarProperty Name="nomeFantasia" ColumnName="nomeFantasia" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="produto">
+            <EntityTypeMapping TypeName="BDAgriculturaModel.produto">
+              <MappingFragment StoreEntitySet="produto">
+                <ScalarProperty Name="idProduto" ColumnName="idProduto" />
+                <ScalarProperty Name="descricaoProduto" ColumnName="descricaoProduto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="produtor">
+            <EntityTypeMapping TypeName="BDAgriculturaModel.produtor">
+              <MappingFragment StoreEntitySet="produtor">
+                <ScalarProperty Name="idPessoaFisica" ColumnName="idPessoaFisica" />
+                <ScalarProperty Name="carteiraProdutor" ColumnName="carteiraProdutor" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="valorUnitario">
+            <EntityTypeMapping TypeName="BDAgriculturaModel.valorUnitario">
+              <MappingFragment StoreEntitySet="valorUnitario">
+                <ScalarProperty Name="idValorUnitario" ColumnName="idValorUnitario" />
+                <ScalarProperty Name="idProduto" ColumnName="idProduto" />
+                <ScalarProperty Name="idCooperativa" ColumnName="idCooperativa" />
+                <ScalarProperty Name="dataValorUnitario" ColumnName="dataValorUnitario" />
+                <ScalarProperty Name="valorUnitario1" ColumnName="valorUnitario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,28 @@
+﻿@Model ProjetoAgroCoops.Models.produto;
+@{
+    ViewBag.Title = "Cadastrar Entrada";
+}
+<h1> Cadastrar entrada de produtos </h1>
+<form name="formCadastro" action="/Entrada/cadastrar" method="post">
+    <div class="form-group">
+        <label for="exampleInputEmail1"> Número do cartão de produtor: </label>
+        <input type="text" name="carteiraProdutor" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Insira seu numero de produtor...">
+    </div>
+    <div class="form-group">
+        <label for="exampleInputEmail1"> Produto: </label>
+        <select>
+            @foreach (var item in Model)
+             {
+                <option value="@item.idProduto">
+                    @item.descricaoProduto
+                </option>
+             }
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="exampleInputEmail1"> Quantidade: </label>
+        <input type="text" name="quantidadeEntrada" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Insira a quantidade entrada na cooperativa...">
+    </div>
+    <a href="/Entrada/adicionarCoop" class="btn btn-primary"> Adicionar Cooperativa </a>
+    <button type="submit" class="btn btn-primary"> Cadastrar entrada </button>
+</form>

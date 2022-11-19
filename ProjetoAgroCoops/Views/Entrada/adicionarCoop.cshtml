@@ -1,0 +1,21 @@
+﻿@Model ProjetoAgroCoops.Models.cooperativa;
+@{
+    ViewBag.Title = "Adicionar Cooperativa";
+}
+<h1> Adicionar cooperativa </h1>
+<form name="formCadastro" action="/Entrada/adicionarCoop" method="post">
+    
+    <div class="form-group">
+        <label for="exampleInputEmail1"> Cooperativa: </label>
+        <select name="id">
+            @foreach (var item in Model)
+             {
+                <option value="@item.idCooperativa">
+                    @item.nomeCooperativa
+                </option>
+             }
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary"> Adicionar Cooperativa </button>
+</form>

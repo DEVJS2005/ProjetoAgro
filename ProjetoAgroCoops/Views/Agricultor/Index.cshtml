@@ -1,0 +1,10 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+<form name="formCadastro" action="/Agricultor/verificarCpf" method="post">
+    <div class="form-group">
+        <label for="exampleInputEmail1"> CPF: </label>
+        <input type="text" name="cpf" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Insira seu CPF">
+    </div>
+    <button type="submit" class="btn btn-primary"> Verificar CPF </button>
+</form>

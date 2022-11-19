@@ -1,0 +1,31 @@
+﻿@Model ProjetoAgroCoops.Models.Produtos;
+@{
+    ViewBag.Title = "Cadastro Produtos";
+}
+<h1> Lista de produtos </h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">ID:</th>
+            <th scope="col">Descrião do produto</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+         {
+            <tr>
+                <th scope="row">@item.idProduto</th>
+                <td>@item.descricaoProduto</td>
+                <td>
+                    <a href="/Pedido/addProduto?id=@item.idProduto" class="btn btn-success"> Adicionar ao carrinho </a>
+                </td>
+                <td>
+                    <a href="/Produto/adicionarEstoque?id=@item.idProduto" class="btn btn-secondary"> Adicionar no estoque/ Alterar </a>
+                </td>
+                <td>
+                    <a href="/Produto/excluir?id=@item.idProduto" class="btn btn-danger"> excluir </a>
+                </td>
+            </tr>
+         }
+    </tbody>
+</table>

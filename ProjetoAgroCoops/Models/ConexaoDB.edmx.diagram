@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="750bad0c295641a6af819db74aa7335e" Name="Diagram1">
+        <EntityTypeShape EntityType="BDAgriculturaModel.cooperativa" Width="1.5" PointX="0.75" PointY="7.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="BDAgriculturaModel.entrada" Width="1.5" PointX="8.25" PointY="10.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="BDAgriculturaModel.estoque" Width="1.5" PointX="3" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="BDAgriculturaModel.pedido" Width="1.5" PointX="0.75" PointY="11.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="BDAgriculturaModel.pedidoEstoque" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="BDAgriculturaModel.pessoa" Width="1.5" PointX="1.5" PointY="15" IsExpanded="true" />
+        <EntityTypeShape EntityType="BDAgriculturaModel.pessoaFisica" Width="1.5" PointX="3.75" PointY="14" IsExpanded="true" />
+        <EntityTypeShape EntityType="BDAgriculturaModel.pessoaJuridica" Width="1.5" PointX="3.75" PointY="17" IsExpanded="true" />
+        <EntityTypeShape EntityType="BDAgriculturaModel.produto" Width="1.5" PointX="0.75" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="BDAgriculturaModel.produtor" Width="1.5" PointX="6" PointY="14.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="BDAgriculturaModel.valorUnitario" Width="1.5" PointX="3" PointY="7" IsExpanded="true" />
+        <AssociationConnector Association="BDAgriculturaModel.FK_entrada_cooperativas" ManuallyRouted="false" />
+        <AssociationConnector Association="BDAgriculturaModel.FK_pedidoEstoque_cooperativas" ManuallyRouted="false" />
+        <AssociationConnector Association="BDAgriculturaModel.FK_valorUnitario_cooperativas" ManuallyRouted="false" />
+        <AssociationConnector Association="BDAgriculturaModel.FK_entrada_produtor" ManuallyRouted="false" />
+        <AssociationConnector Association="BDAgriculturaModel.FK_estoque_produtos" ManuallyRouted="false" />
+        <AssociationConnector Association="BDAgriculturaModel.FK_pedido_pessoas" ManuallyRouted="false" />
+        <AssociationConnector Association="BDAgriculturaModel.FK_pedidoEstoque_pedido" ManuallyRouted="false" />
+        <AssociationConnector Association="BDAgriculturaModel.FK_pedidoEstoque_produtos" ManuallyRouted="false" />
+        <AssociationConnector Association="BDAgriculturaModel.FK_pessoaFisica_pessoas" ManuallyRouted="false" />
+        <AssociationConnector Association="BDAgriculturaModel.FK_pessoaJuridica_pessoas" ManuallyRouted="false" />
+        <AssociationConnector Association="BDAgriculturaModel.FK_produtor_pessoaFisica" ManuallyRouted="false" />
+        <AssociationConnector Association="BDAgriculturaModel.FK_valorUnitario_produtos" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

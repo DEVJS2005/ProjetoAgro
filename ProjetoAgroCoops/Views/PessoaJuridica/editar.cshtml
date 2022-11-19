@@ -1,0 +1,16 @@
+﻿@Model ProjetoAgroCoops.Models.pessoas
+@{
+    ViewBag.Title = "Cadastro Usuario";
+}
+<h1> Informações complementares </h1>
+<form name="formCadastro" action="/PessoaJuridica/cadastrar?id=@Model.idPessoa" method="post">
+    <div class="form-group">
+        <label for="exampleInputEmail1"> CNPJ: </label>
+        <input type="text" name="cnpj" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Insira seu cnpj">
+    </div>
+    <div class="form-group">
+        <label for="exampleInputEmail1"> Nome Fantasia: </label>
+        <input type="text" name="nomeFantasia" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Insira o nome fantasia">
+    </div>
+    <button type="submit" class="btn btn-primary"> Concluir </button>
+</form>

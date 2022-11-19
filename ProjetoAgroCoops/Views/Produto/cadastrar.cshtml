@@ -1,0 +1,11 @@
+﻿@{
+    ViewBag.Title = "Cadastro Produtos";
+}
+<h1> Cadastrar produtos </h1>
+<form name="formCadastro" action="/Produto/cadastrar" method="post">
+    <div class="form-group">
+        <label for="exampleInputEmail1"> Descrição do produto: </label>
+        <input type="text" name="descricaoProduto" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Insira a descrição do produto">
+    </div>
+    <button type="submit" class="btn btn-primary"> Cadastrar produto </button>
+</form>

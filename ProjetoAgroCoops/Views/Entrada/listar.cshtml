@@ -1,0 +1,33 @@
+﻿@Model ProjetoAgroCoops.Models.Cooperativas;
+@{
+    ViewBag.Title = "Listar Cooperativas";
+}
+<h1> Lista de produtos </h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">ID:</th>
+            <th scope="col">Nome:</th>
+            <th scope="col">Cnpj:</th>
+            <th scope="col">Estado:</th>
+            <th scope="col">Cidade:</th>
+            <th scope="col">Região:</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+         {
+            <tr>
+                <th scope="row">@item.idEntrada</th>
+                <td>@item.nomeCooperativa</td>
+                <td>@item.cnpjCooperativo</td>
+                <td>@item.estado</td>
+                <td>@item.cidade</td>
+                <td>@item.regiao</td>
+                <td>
+                    <a href="/Produto/excluir?id=@item.idProduto" class="btn btn-danger"> excluir </a>
+                </td>
+            </tr>
+         }
+    </tbody>
+</table>
